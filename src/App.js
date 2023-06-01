@@ -2,22 +2,28 @@ import { useEffect, useState } from 'react';
 import './App.css';
 
 function App() {
-  const [users, setUsers] = useState([]);
+  const [items, setItems] = useState([]);
   useEffect(() => {
     fetch("https://jsonplaceholder.typicode.com/users")
     .then((res) => res.json())
-    .then((json) => setUsers(json))
+    .then((json) => setItems(json))
   }, []);
-  return (
+
+  return(
     <>
-    {users.map((user) => (
-      <div className="card">
-        <p>{user.name}</p>
-        <p>{user.userName}</p>
+      <div className="header">Users</div>
+      <div className="card-grid">
+        {items.map((item) => (
+          <div className='card'>
+            <div className='card-header'>Name: {item.name}</div>
+            <div className='card-body'>Address: {JSON.stringify(item.address)}</div>
+          </div>
+        ))}
       </div>
-    ))}
     </>
   );
 }
 
 export default App;
+
+
