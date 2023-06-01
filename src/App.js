@@ -1,25 +1,29 @@
-import logo from './logo.svg';
+import { useEffect, useState } from 'react';
 import './App.css';
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+  const [items, setItems] = useState([]);
+  useEffect(() => {
+    fetch("https://jsonplaceholder.typicode.com/users")
+    .then((res) => res.json())
+    .then((json) => setItems(json))
+  }, []);
+
+  return(
+    <>
+      <div className="header">Users</div>
+      <div className="card-grid">
+        {items.map((item) => (
+          <div className='card'>
+            <div className='card-header'>Name: {item.name}</div>
+            <div className='card-body'>Address: {JSON.stringify(item.address)}</div>
+          </div>
+        ))}
+      </div>
+    </>
   );
 }
 
 export default App;
+
+
